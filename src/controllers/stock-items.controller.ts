@@ -11,7 +11,7 @@ export class StockItemsController {
     try {
       return await this.service.listStockItems();
     } catch (err) {
-      throw new HttpException('There was an error', 502);
+      throw new HttpException(err, 502);
     }
   }
 }

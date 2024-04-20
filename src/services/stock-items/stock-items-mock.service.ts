@@ -4,7 +4,7 @@ import { StockItemModel } from '../../models';
 
 @Injectable()
 export class StockItemsMockService implements StockItemsApi {
-  listStockItems(): StockItemModel[] {
+  async listStockItems(): Promise<StockItemModel[]> {
     return [
       {
         id: "1",

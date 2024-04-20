@@ -1,5 +1,5 @@
 import { StockItemModel } from '../../models';
 
 export abstract class StockItemsApi {
-    abstract listStockItems(): StockItemModel[];
+    abstract listStockItems(): Promise<StockItemModel[]>;
 }

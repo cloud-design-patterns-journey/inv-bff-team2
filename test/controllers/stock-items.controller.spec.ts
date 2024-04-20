@@ -1,31 +1,51 @@
 import * as request from 'supertest';
-import { Container } from 'typescript-ioc';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import Mock = jest.Mock;
-
 import { AppModule } from '../../src/app.module';
-import { StockItemsMockService } from '../../src/services';
+import { StockItemsApi } from '../../src/services';
 
+
+const mockResult = [
+    {
+        id: "1",
+        name: "Self-sealing stem bolt",
+        stock: 10,
+        unitPrice: 10.5,
+        picture: "https://via.placeholder.com/32.png",
+        manufacturer: "Bajor Galactic"
+    },
+    {
+        id: "2",
+        name: "Heisenberg compensator",
+        stock: 20,
+        unitPrice: 20.0,
+        picture: "https://via.placeholder.com/32.png",
+        manufacturer: "Federation Imports"
+    },
+    {
+        id: "3",
+        name: "Tooth sharpener",
+        stock: 30,
+        unitPrice: 5.25,
+        picture: "https://via.placeholder.com/32.png",
+        manufacturer: "Farenginar Exploits"
+    }
+];
 
 describe('stock-item.controller', () => {
 
     let app: INestApplication;
-    let serviceListStockItems: Mock;
+    let stockItemsService = { listStockItems: () => mockResult };
 
     beforeEach(async () => {
 
-        serviceListStockItems = jest.fn();
-        Container.bind(StockItemsMockService).factory(
-            () => ({
-                listStockItems: serviceListStockItems
-            }),
-        );
-
         const moduleFixture: TestingModule = await Test.createTestingModule({
-          imports: [AppModule],
-        }).compile();
-    
+            imports: [AppModule],
+        })
+            .overrideProvider(StockItemsApi)
+            .useValue(stockItemsService)
+            .compile();
+
         app = moduleFixture.createNestApplication();
         await app.init();
     });
@@ -36,13 +56,12 @@ describe('stock-item.controller', () => {
 
     describe('given GET /stock-items', () => {
         describe('when service is successful', () => {
-            const expectedResult = [{ value: 'val' }];
-            beforeEach(() => {
-                serviceListStockItems.mockResolvedValue(expectedResult);
-            });
-
             test('then return 200 status', async () => {
                 return request(app.getHttpServer()).get('/stock-items').expect(200);
+            });
+
+            test('then should return an empty array', async () => {
+                return request(app.getHttpServer()).get('/stock-items').expect(mockResult);
             });
         });
     });
