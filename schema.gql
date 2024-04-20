@@ -9,4 +9,15 @@ type Greeting {
 
 type Query {
   helloWorld: Greeting!
+  stockItems: [StockItem!]!
+}
+
+"""stock-item"""
+type StockItem {
+  id: String!
+  manufacturer: String!
+  name: String!
+  picture: String!
+  stock: Float!
+  unitPrice: Float!
 }
