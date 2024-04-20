@@ -1,10 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException } from '@nestjs/common';
+
+import { StockItemsApi } from '../services';
 
 @Controller('stock-items')
 export class StockItemsController {
+  constructor(private readonly service: StockItemsApi) { }
 
   @Get()
   async listStockItems(): Promise<any[]> {
-    return [];
+    try {
+      return await this.service.listStockItems();
+    } catch (err) {
+      throw new HttpException('There was an error', 502);
+    }
   }
 }
