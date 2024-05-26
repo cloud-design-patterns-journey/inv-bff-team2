@@ -1,3 +1,5 @@
+# By team2
+
 # Graphql/Typescript Code Pattern
 
 This is a template repository for a Typescript-based Graphql micro-service.
