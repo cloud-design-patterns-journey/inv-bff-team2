@@ -35,7 +35,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "superagent": "^8.1.2",
-    "typescript-ioc": "^3.0.5"
+    "typescript-ioc": "^3.2.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
